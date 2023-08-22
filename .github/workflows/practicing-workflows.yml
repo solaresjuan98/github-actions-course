@@ -3,7 +3,7 @@ name: practicing-workflows
 on:
   push:
     branches:
-      - testing-workflow
+      - testing-workflows
 #   workflow_dispatch:
 #     inputs:
 #       dockerhub_username:
