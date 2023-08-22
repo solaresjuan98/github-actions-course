@@ -1,0 +1,48 @@
+name: practicing-workflows
+
+on:
+  push:
+    branches:
+      - testing-workflow
+#   workflow_dispatch:
+#     inputs:
+#       dockerhub_username:
+#         description: "DockerHub username"
+#         required: true
+#         default: "${{ secrets.DOCKERHUB_USERNAME }}"
+#         type: string
+#       nombre:
+#         description: "DockerHub password"
+#         required: true
+#         default: "${{ secrets.DOCKERHUB_PASSWORD }}"
+#         type: string
+
+jobs:
+  start_workflow:
+    name: Start workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: get_step
+        run: |
+          echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+
+  dockerize_python_app:
+    name: Dockerize Python App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t flask-hello-app .
+
+      - name: Tag Docker image
+        run: "docker tag ${{ secrets.DOCKERHUB_USERNAME }}/flask_hello_app:latest"
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Push to Docker Hub
+        run: "docker push ${{ secrets.DOCKERHUB_USERNAME }}/flask_hello_app:latest"
