@@ -16,9 +16,9 @@ jobs:
 
       - name: Validate
         run: |
-          if [[ "${{github.ref}}" == "ref/heads/main"  ]]; then
+          if [[ "${{github.ref}}" == "refs/heads/main" ]]; then
             echo "You're in the main branch (main)"
-          elif [[ "${{github.ref}}" == "ref/heads/testing-workflows" ]]; then
+          elif [[ "${{github.ref}}" == "refs/heads/testing-workflows" ]]; then
             echo "You're in testing-workflows branch"
           else
             echo "You're in a different branch"
