@@ -2,8 +2,15 @@ name: practicing-workflows
 
 on:
   push:
+    tags:
+      - v*
+  pull_request:
+    types:
+      - closed
     branches:
-      - testing-workflows
+      - main
+    paths:
+      - ".github/workflows/*"
 #   workflow_dispatch:
 #     inputs:
 #       dockerhub_username:
@@ -19,13 +26,7 @@ on:
   schedule:
     - cron: "0 0 * * *"  # Ejecutar todos los días a las 12:00 AM UTC
     
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
-    paths:
-      - ".github/workflows/*"
+
 
 jobs:
   start_workflow:
