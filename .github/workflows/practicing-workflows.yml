@@ -16,6 +16,16 @@ on:
 #         required: true
 #         default: "${{ secrets.DOCKERHUB_PASSWORD }}"
 #         type: string
+  schedule:
+    - cron: "0 0 * * *"  # Ejecutar todos los días a las 12:00 AM UTC
+    
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - ".github/workflows/*"
 
 jobs:
   start_workflow:
