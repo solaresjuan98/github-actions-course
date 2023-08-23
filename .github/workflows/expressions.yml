@@ -1,0 +1,26 @@
+name: Expressions
+
+on:
+  push:
+    branches:
+      - main
+      - testing-workflows
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get current branch
+        run: echo "You're in ${{github.ref}}"
+
+      - name: Validate
+        run: |
+          if [[ "${{github.ref}}" == "refs/heads/main" ]]; then
+            echo "You're in the main branch (main)"
+          elif [[ "${{github.ref}}" == "refs/heads/testing-workflows" ]]; then
+            echo "You're in testing-workflows branch"
+          else
+            echo "You're in a different branch"
+            exit 1
+          fi
